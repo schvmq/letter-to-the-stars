@@ -1,0 +1,77 @@
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 7, 20, 0.7);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    animation: fadeIn 0.25s ease-out;
+}
+
+.modal-card {
+    position: relative;
+    width: 90%;
+    max-width: 440px;
+    background: rgba(22, 28, 54, 0.85);
+    border: 1px solid rgba(244, 235, 213, 0.15);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(112, 72, 163, 0.2);
+    color: var(--paper-cream);
+    animation: scaleUp 0.25s ease-out;
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--paper-cream);
+    font-size: 1.5rem;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.modal-close:hover {
+    opacity: 1;
+}
+
+.modal-message {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    margin-bottom: 1.5rem;
+}
+
+.modal-date {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--starlight-periwinkle);
+    text-align: right;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleUp {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

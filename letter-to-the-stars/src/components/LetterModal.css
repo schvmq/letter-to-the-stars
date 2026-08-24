@@ -1,0 +1,127 @@
+.letter-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(10, 13, 24, 0.65);
+    backdrop-filter: blur(8px);
+}
+
+.letter-modal {
+    position: relative;
+
+    width: min(500px, 100%);
+
+    padding: 32px;
+
+    border: 1px solid rgba(244, 235, 213, 0.15);
+    border-radius: 20px;
+
+    background: rgba(30, 45, 74, 0.75);
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        0 0 40px rgba(112, 72, 163, 0.15);
+
+    color: var(--paper-cream);
+}
+
+.letter-modal h2 {
+    margin-bottom: 8px;
+}
+
+.letter-modal p {
+    margin-bottom: 24px;
+    opacity: 0.7;
+}
+
+.letter-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+
+    border: none;
+    background: transparent;
+
+    color: var(--paper-cream);
+    font-size: 28px;
+
+    cursor: pointer;
+}
+
+.letter-textarea {
+    width: 100%;
+    min-height: 160px;
+
+    padding: 16px;
+
+    resize: vertical;
+
+    border: 1px solid rgba(244, 235, 213, 0.15);
+    border-radius: 12px;
+
+    background: rgba(10, 13, 24, 0.4);
+    color: var(--paper-cream);
+
+    font: inherit;
+}
+
+.letter-textarea::placeholder {
+    color: var(--paper-cream);
+    opacity: 0.4;
+}
+
+.letter-submit {
+    width: 100%;
+
+    margin-top: 16px;
+    padding: 12px 18px;
+
+    border: none;
+    border-radius: 999px;
+
+    background: var(--starlight-amber);
+    color: var(--sky-abyss);
+
+    font: inherit;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.letter-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.letter-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+
+    margin-top: 8px;
+}
+
+.character-count {
+    margin: 0;
+    font-size: 0.8rem;
+    opacity: 0.5;
+}
+
+.letter-error {
+    margin: 0;
+    color: var(--stardust-rose);
+    font-size: 0.8rem;
+}
+
+.character-count-warning {
+    color: var(--starlight-amber);
+    opacity: 1;
+}
