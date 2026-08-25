@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import type { Star } from '../types/star';
 import './StarModal.css';
 
@@ -6,7 +7,29 @@ interface StarModalProps {
     onClose: () => void;
 }
 
-export default function StarModal({ star, onClose }: StarModalProps) {
+export default function StarModal({
+    star,
+    onClose,
+}: StarModalProps) {
+
+    useEffect(() => {
+        if (!star) {
+            return;
+        }
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                onClose();
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [star, onClose]);
+
     if (!star) return null;
 
     return (

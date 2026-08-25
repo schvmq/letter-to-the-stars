@@ -15,8 +15,11 @@ function getRandomShape(): Star['shape'] {
     return 'star';
 }
 
-export function createStar(message: string): Star {
-    const position = generateStarPosition();
+export function createStar(
+    message: string,
+    existingStars: Pick<Star, 'x' | 'y'>[] = []
+): Star {
+    const position = generateStarPosition(existingStars);
 
     return {
         id: crypto.randomUUID(),

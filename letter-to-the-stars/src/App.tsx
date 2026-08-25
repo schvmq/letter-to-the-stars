@@ -150,21 +150,7 @@ export default function App() {
   useEffect(() => {
     getLetters()
       .then((data) => {
-        if (data) {
-          // Normalize Supabase snake_case data if needed
-          const formattedStars: Star[] = data.map((item: any) => ({
-            id: item.id,
-            message: item.message,
-            createdAt: item.createdAt ?? item.created_at ?? new Date().toISOString(),
-            x: item.x ?? Math.random() * 90 + 5,
-            y: item.y ?? Math.random() * 90 + 5,
-            size: item.size ?? 6,
-            brightness: item.brightness ?? 1,
-            shape: item.shape ?? 'circle',
-          }));
-
-          setStars(formattedStars);
-        }
+        setStars(data);
       })
       .catch((error) => {
         console.error('Failed to fetch letters:', error);

@@ -4,6 +4,8 @@ import { createLetter } from '../lib/letters';
 import type { Star } from '../types/star';
 import { containsBlockedWord } from '../utils/contentFilter';
 
+const COOLDOWN_ENABLED = !import.meta.env.DEV;
+
 type LetterModalProps = {
     isOpen: boolean;
     onClose: () => void;
@@ -64,7 +66,7 @@ export default function LetterModal({
             return;
         }
 
-        if (hasSubmittedToday) {
+        if (COOLDOWN_ENABLED && hasSubmittedToday) {
             setError('You have already sent a star today. Come back tomorrow. ✦');
             return;
         }
@@ -157,11 +159,11 @@ export default function LetterModal({
                 <button
                     className="letter-submit"
                     onClick={handleSubmit}
-                    disabled={isSubmitting || hasSubmittedToday}
+                    disabled={isSubmitting || (COOLDOWN_ENABLED && hasSubmittedToday)}
                 >
                     {isSubmitting
                         ? 'Sending...'
-                        : hasSubmittedToday
+                        : COOLDOWN_ENABLED && hasSubmittedToday
                             ? 'Already sent today ✦'
                             : 'Send to the stars ✦'}
                 </button>
