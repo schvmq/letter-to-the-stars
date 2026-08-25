@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from 'react'; import './LetterModal.css';
+import { useEffect, useRef, useState } from 'react';
+import './LetterModal.css';
 import { createLetter } from '../lib/letters';
 import type { Star } from '../types/star';
+import { containsBlockedWord } from '../utils/contentFilter';
 
 type LetterModalProps = {
     isOpen: boolean;
@@ -16,12 +18,25 @@ export default function LetterModal({
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [hasSubmittedToday, setHasSubmittedToday] = useState(false);
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     useEffect(() => {
         if (!isOpen) {
             return;
+        }
+
+        const lastSubmission = localStorage.getItem('lastStarSubmission');
+
+        const today = new Date().toLocaleDateString();
+
+        if (lastSubmission === today) {
+            setHasSubmittedToday(true);
+            setError('You have already sent a star today. Come back tomorrow. ✦');
+        } else {
+            setHasSubmittedToday(false);
+            setError('');
         }
 
         textareaRef.current?.focus();
@@ -49,6 +64,21 @@ export default function LetterModal({
             return;
         }
 
+        if (hasSubmittedToday) {
+            setError('You have already sent a star today. Come back tomorrow. ✦');
+            return;
+        }
+
+        if (containsBlockedWord(trimmedMessage)) {
+            setError('Please keep your letter respectful. ✦');
+            return;
+        }
+
+        if (trimmedMessage.length > 300) {
+            setError('Your letter must be 300 characters or less.');
+            return;
+        }
+
         setIsSubmitting(true);
         setError('');
 
@@ -57,6 +87,11 @@ export default function LetterModal({
 
             console.log('Letter created:', newLetter);
             onLetterCreated(newLetter);
+
+            const today = new Date().toLocaleDateString();
+
+            localStorage.setItem('lastStarSubmission', today);
+            setHasSubmittedToday(true);
 
             setMessage('');
             onClose();
@@ -107,7 +142,7 @@ export default function LetterModal({
                 />
 
                 <p
-                    className={`character-count ${message.length >= 280 ? 'character-count-warning' : ''
+                    className={`character-count ${message.length >= 270 ? 'character-count-warning' : ''
                         }`}
                 >
                     {message.length} / 300
@@ -122,9 +157,13 @@ export default function LetterModal({
                 <button
                     className="letter-submit"
                     onClick={handleSubmit}
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || hasSubmittedToday}
                 >
-                    {isSubmitting ? 'Sending...' : 'Send to the stars ✦'}
+                    {isSubmitting
+                        ? 'Sending...'
+                        : hasSubmittedToday
+                            ? 'Already sent today ✦'
+                            : 'Send to the stars ✦'}
                 </button>
 
             </div>
